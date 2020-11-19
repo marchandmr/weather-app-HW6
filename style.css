@@ -24,3 +24,17 @@ header{
     {
         float: left;
     }
+
+    .favorable {
+        background-color: #77dd77;
+        color: #333;
+      }
+
+      .severe {
+        background-color: red;
+        color: #333;
+      }
+      .moderate {
+        background-color: yellow;
+        color: #333;
+      }
