@@ -1,22 +1,23 @@
+//variables
 var submitBtn = $(".submit-btn");
 var key = "6cf37dfb9a0f723626baf273dac3a69b";
 var dateIDcounter = ["0", "1", "2", "3", "4"];
 var array = [];
+
 submitBtn.click(function (event) {
     event.preventDefault();
-    $("#city").empty();
+    $("#city").empty(); //empty functions to clear out all previous data
     $("#picture").empty();
     $("#temperature").empty();
     $("#humidity").empty();
     $("#wind").empty();
     $("#wind").empty();
     $("#uvIndex").empty();
-    var textBox = $(".input").val();
-    array.push(textBox);
-    console.log(array);
+    var textBox = $(".input").val(); //saves the value of the input box
+    var get = JSON.parse(localStorage.getItem("textBox")); // shows previously cities that were searched
+    array.push(textBox); // pushes the value of the input box into an array
     localStorage.setItem("textBox", JSON.stringify(textBox));
-    var get = JSON.parse(localStorage.getItem("textBox"));
-    $(".list-group").append("<li>" + get + "</li>");
+    $(".list-group").append("<li>" + get + "</li>"); // adds previous searches to the page
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + textBox + "&Appid=" + key + "&units=imperial";
     var fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=" + textBox + "&Appid=" + key + "&units=imperial";
@@ -25,7 +26,7 @@ submitBtn.click(function (event) {
         url: queryURL,
         method: "GET"
     })
-        .then(function (response) {
+        .then(function (response) { // appends all of the current weather info of the city that was searched for 
             var picture = response.weather[0].icon;
             var pictureURL = "http://openweathermap.org/img/w/" + picture + ".png";
             var lat = response.coord.lat;
@@ -41,7 +42,7 @@ submitBtn.click(function (event) {
                 url: uvIndex,
                 method: "GET"
             })
-                .then(function (response) {
+                .then(function (response) { // adds a class of favorable, moderate, or severe based on the current uv index, while removing the classes of previously searched cities
                     $("#uvIndex").removeClass("favorable");
                     $("#uvIndex").removeClass("moderate");
                     $("#uvIndex").removeClass("severe");
@@ -60,7 +61,7 @@ submitBtn.click(function (event) {
                 })
         })
 
-    $.ajax({
+    $.ajax({  // 5 day forecast, data is cleared before being re-initiaized each time the submit button is pressed, I also used the substring function to cut off unnecessary parts of the date that were stored in the API
         url: fiveDay,
         method: "GET"
     })
