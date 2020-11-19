@@ -1,0 +1,26 @@
+header{
+    background-color: #333;
+    color: white;
+    text-align: center;
+}
+
+.weatherHeader{
+    font-size: 50px;
+}
+
+#wrapper {
+    border-style: solid;
+  
+    }
+
+    .extendedForecast{
+    border-style: solid;
+    }
+    .container{
+        float: right;
+      
+    }
+    .card
+    {
+        float: left;
+    }
