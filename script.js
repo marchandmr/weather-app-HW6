@@ -72,7 +72,8 @@ submitBtn.click(function (event) {
                 $("#img" + dateIDcounter[counter]).empty();
                 $("#temp" + dateIDcounter[counter]).empty();
                 $("#hum" + dateIDcounter[counter]).empty();
-                $("#date" + dateIDcounter[counter]).append(response.list[((counter + 1) * 8) - 1].dt_txt);
+                var date = response.list[((counter + 1) * 8) - 1].dt_txt;
+                $("#date" + dateIDcounter[counter]).append(date.substring(0, 10));
                 var picture = response.list[((counter + 1) * 8) - 1].weather[0].icon;
                 var pictureURL = "https://openweathermap.org/img/wn/" + picture + ".png";
                 $("#img" + dateIDcounter[counter]).append("<img src=" + pictureURL + ">");
