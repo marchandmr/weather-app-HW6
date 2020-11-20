@@ -2,22 +2,33 @@
 var submitBtn = $(".submit-btn");
 var key = "6cf37dfb9a0f723626baf273dac3a69b";
 var dateIDcounter = ["0", "1", "2", "3", "4"];
-var array = [];
+var array = []
 
 submitBtn.click(function (event) {
     event.preventDefault();
-    $("#city").empty(); //empty functions to clear out all previous data
+    //empty functions to clear out all previous data
+    $(".list-group").empty();
+    $("#city").empty();
     $("#picture").empty();
     $("#temperature").empty();
     $("#humidity").empty();
     $("#wind").empty();
     $("#wind").empty();
     $("#uvIndex").empty();
-    var textBox = $(".input").val(); //saves the value of the input box
-    var get = JSON.parse(localStorage.getItem("textBox")); // shows previously cities that were searched
-    array.push(textBox); // pushes the value of the input box into an array
-    localStorage.setItem("textBox", JSON.stringify(textBox));
-    $(".list-group").append("<li>" + get + "</li>"); // adds previous searches to the page
+    //saves the value of the input box
+    var textBox = $(".input").val();
+    // shows previously cities that were searched
+    // pushes the value of the input box into an array
+    // adds previous searches to the page
+    var x = array;
+    console.log(x);
+    localStorage.setItem("array", JSON.stringify(x))
+    for (var i = 0; i < array.length; i++) {
+        getHistory = localStorage.getItem('array');
+        $(".list-group").append("<button>" + JSON.parse(getHistory)[i] + "</button>");
+
+
+    }
 
     var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + textBox + "&Appid=" + key + "&units=imperial";
     var fiveDay = "https://api.openweathermap.org/data/2.5/forecast?q=" + textBox + "&Appid=" + key + "&units=imperial";
@@ -27,6 +38,8 @@ submitBtn.click(function (event) {
         method: "GET"
     })
         .then(function (response) { // appends all of the current weather info of the city that was searched for 
+            array.push(response.name);
+            console.log(array)
             var picture = response.weather[0].icon;
             var pictureURL = "http://openweathermap.org/img/w/" + picture + ".png";
             var lat = response.coord.lat;
