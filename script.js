@@ -3,7 +3,13 @@ var submitBtn = $(".submit-btn");
 var key = "6cf37dfb9a0f723626baf273dac3a69b";
 var dateIDcounter = ["0", "1", "2", "3", "4"];
 var array = []
+if (localStorage.getItem("array")) {
+    array = JSON.parse(localStorage.getItem("array"));
+    for (var j = 0; j < array.length; j++) {
+        $(".list-group").append("<button>" + array[j] + "</button>");
 
+    }
+}
 submitBtn.click(function (event) {
     event.preventDefault();
     //empty functions to clear out all previous data
@@ -22,6 +28,7 @@ submitBtn.click(function (event) {
     // adds previous searches to the page
     var x = array;
     console.log(x);
+    console.log(JSON.parse(localStorage.getItem("array")))
     localStorage.setItem("array", JSON.stringify(x))
     for (var i = 0; i < array.length; i++) {
         getHistory = localStorage.getItem('array');
